@@ -34,8 +34,11 @@
 
       <!-- 서버에서 가져온 할일 리스트 -->
       <!-- 서버데이터 집어넣어서 HTML불러오는 법 -->
-      <h4>할일 제목 :  <서버데이터> </h4>
-      <p>할일 마감날짜 : <서버데이터> </p>
+      <h4> 할일 제목 : <%= posts[0].제목 %> </h4>
+      <p> 할일 마감날짜 : <%= posts[0].날짜 %></p>
+
+      <h4> 할일 제목 : <%= posts[1].제목 %> </h4>
+      <p> 할일 마감날짜 : <%= posts[1].날짜  %></p>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>

@@ -56,20 +56,25 @@ db.collection('post').insertOne( {제목 : 요청.body.title , 날짜 : 요청.b
 });
 });
 
-// body-parser 미들웨어가 만드는 요청의 본문을 해석한 객체
-// 클라이언트에서 보낸 것들이 객체로 들어있다. input태그의 name 속성값이 이 객체의 키가 됨
-app.post('/add', function(요청, 응답){
+
+app.post('/add', function(요청, 응답){ 
     응답.send('전송완료');
-    // 데이터 저장하는 법
-    // 1. db.collection('post'). = post라는 db컬렉션을 선택  
-    // 2. .insertOne () = post라는 collection에 데이터 하나를 저장해주세요. () = 저장할 데이터, {} = 그 다음 실행 할 함수
-    db.collection('post').insertOne( { 제목 : 요청.body.title, 날짜 : 요청.body.date } , function(){
-    console.log('저장완료')
+    db.collection('counter').findOne({name:'게시물갯수'}, function(에러, 결과){
+        console.log(결과.totalPost);
+        var 총게시물갯수 = 결과.totalPost;
+        
+        db.collection('post').insertOne({ _id : 총게시물갯수 + 1, 제목 : 요청.body.title, 날짜 : 요청.body.date }, function(에러, 결과) {
+            console.log('저장완료');
+            db.collection('counter').updateOne({name:'게시물갯수'},{ $inc: {totalPost:1} },function(에러, 결과){
+                if(에러){return console.log(에러)}
+            })
+        })
     });
 });
 
+
 // list 로 접속(GET)요청으로 접속하면
-// 실제 DB에 저장되 데이터들로 예쁘게 꾸며진 HTML을 보여줌
+// 실제 DB에 저장된 데이터들로 예쁘게 꾸며진 HTML을 보여줌
 app.get('/list', function(요청,응답) {
     // 디비에 저장된 post라는 collection안의 제목인 뭐인 모든 데이터를 꺼내주세요
     // DB안 collection안의 post파일안에서 찾아라. 

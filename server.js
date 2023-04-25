@@ -65,3 +65,6 @@ app.post('/add', function(요청, 응답){
     console.log('저장완료')
     });
 });
+
+// list 로 접속(GET)요청으로 접속하면
+// 실제 DB에 저장되 데이터들로 예쁘게 꾸며진 HTML을 보여줌

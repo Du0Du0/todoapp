@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 // qs는 내장모듈이 아닌 npm 패키지이고, querystring 기능을 더 확장한 모듈
 app.use(bodyParser.urlencoded({extended : true}));
 const MongoClient = require('mongodb').MongoClient;
+//EJS관련 등록코드 -> node.js가 인식을 잘해줌
+app.set('view engine','ejs');
 
 //전역변수 지정
 let db;
@@ -18,8 +20,8 @@ db = client.db('todoapp');
 //.listen(서버띄울 포트번호, 띄운 후 실행할 코드) 
 // app.listen(3000, 함수) 3000포트를 기반으로 함수 실행, 대기 중인 상태로 머물러있음
 // localhost:3000은 127.0.0.1:3000과 같음
-app.listen(8080, function () {
-    console.log('listening on 8080')
+app.listen(8000, function () {
+    console.log('listening on 8000')
     });
 });
 
@@ -68,3 +70,6 @@ app.post('/add', function(요청, 응답){
 
 // list 로 접속(GET)요청으로 접속하면
 // 실제 DB에 저장되 데이터들로 예쁘게 꾸며진 HTML을 보여줌
+app.get('/list', function(요청,응답) {
+    응답.render('list.ejs');
+});
